@@ -1,0 +1,5 @@
+group,members,mean_abs_shap,share_of_total_abs
+speed_torque_power,"rot_speed_rpm, torque_nm, power_w",0.0317486,0.41785
+wear_overstrain,"tool_wear_min, overstrain",0.0227178,0.298994
+thermal,"air_temp_k, process_temp_k, delta_t",0.0183104,0.240987
+product_type,type,0.00320399,0.0421685

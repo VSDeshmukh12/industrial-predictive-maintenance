@@ -1,0 +1,10 @@
+rule,status,rows,failures,failure_rate,own_mode_positive
+hdf,condition_met,94,94,1,94
+hdf,approaching,1370,37,0.0270073,0
+hdf,not_met,6536,140,0.0214198,0
+pwf,condition_met,78,78,1,78
+pwf,approaching,368,54,0.146739,0
+pwf,not_met,7554,139,0.0184008,0
+osf,condition_met,77,77,1,77
+osf,approaching,113,9,0.079646,0
+osf,not_met,7810,185,0.0236876,0

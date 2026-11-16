@@ -1,0 +1,146 @@
+{
+  "bundle_schema_version": 1,
+  "dataset": {
+    "file": "data/raw/ai4i2020.csv",
+    "pinned_sha256": "dc6630cd9b1f0f853922fad78a1b6436570d3f1ec863f1dd5c4340ac56bc8a8e",
+    "sha256": "dc6630cd9b1f0f853922fad78a1b6436570d3f1ec863f1dd5c4340ac56bc8a8e"
+  },
+  "environment": {
+    "implementation": "CPython",
+    "installed_versions": {
+      "catboost": "1.2.10",
+      "cloudpickle": "3.1.2",
+      "contourpy": "1.3.3",
+      "cycler": "0.12.1",
+      "fonttools": "4.68.0",
+      "graphviz": "0.21",
+      "imbalanced-learn": "0.14.2",
+      "joblib": "1.6.0",
+      "kiwisolver": "1.5.1",
+      "lightgbm": "4.7.0",
+      "matplotlib": "3.11.2",
+      "narwhals": "2.28.0",
+      "numpy": "2.4.6",
+      "packaging": "26.3",
+      "pandas": "3.1.1",
+      "pillow": "13.0.0",
+      "plotly": "7.1.0",
+      "pyparsing": "3.3.3",
+      "python-dateutil": "4.0.0",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.17.1",
+      "six": "1.17.0",
+      "sklearn-compat": "0.1.6",
+      "threadpoolctl": "3.8.0",
+      "tzdata": "2026.6",
+      "xgboost-cpu": "3.2.0"
+    },
+    "machine": "x86_64",
+    "pin_mismatches": {},
+    "platform": "Linux-6.18.44-fc-v445-x86_64-with-glibc2.39",
+    "python": "3.11.18",
+    "requirements_txt_sha256": "ea35cb1221b476b27bdaf719acb2484923d8eb7b522fc3445adbf9e3b6b84dc8"
+  },
+  "feature_definitions": {
+    "derived_physics_features": {
+      "delta_t": "process_temp_k - air_temp_k  [K]",
+      "overstrain": "tool_wear_min * torque_nm  [min*Nm]",
+      "power_w": "torque_nm * rot_speed_rpm * 2*pi/60  [W]"
+    },
+    "model_matrix_columns_in_order": [
+      "air_temp_k",
+      "process_temp_k",
+      "rot_speed_rpm",
+      "torque_nm",
+      "tool_wear_min",
+      "delta_t",
+      "power_w",
+      "overstrain",
+      "type_L",
+      "type_M",
+      "type_H"
+    ],
+    "never_model_inputs": [
+      "hdf",
+      "machine_failure",
+      "osf",
+      "product_id",
+      "pwf",
+      "rnf",
+      "twf",
+      "udi"
+    ],
+    "raw_inputs": {
+      "air_temp_k": "Air temperature [K]",
+      "process_temp_k": "Process temperature [K]",
+      "rot_speed_rpm": "Rotational speed [rpm]",
+      "tool_wear_min": "Tool wear [min]",
+      "torque_nm": "Torque [Nm]",
+      "type": "Product quality variant, one of L/M/H"
+    },
+    "rf_impurity_importance_training_fit": {
+      "air_temp_k": 0.009783925351382393,
+      "delta_t": 0.11153212707311602,
+      "overstrain": 0.2766889452890751,
+      "power_w": 0.26924223010924997,
+      "process_temp_k": 0.0037638221493628255,
+      "rot_speed_rpm": 0.20006404206845493,
+      "tool_wear_min": 0.016021258093982055,
+      "torque_nm": 0.07562762504573607,
+      "type_H": 0.0007380191835062516,
+      "type_L": 0.02963936640362353,
+      "type_M": 0.006898639232510922
+    },
+    "scaling": "StandardScaler on all numeric columns (raw + derived), fitted on the training partition",
+    "tool_wear_advisory_inputs": [
+      "tool_wear_min"
+    ],
+    "type_categories": [
+      "L",
+      "M",
+      "H"
+    ]
+  },
+  "frozen_spec": {
+    "calibration": "none|uncalibrated",
+    "feature_set": "physics",
+    "model": "random_forest",
+    "params": {
+      "max_depth": 6,
+      "max_features": 0.8,
+      "min_samples_leaf": 6,
+      "n_estimators": 390
+    },
+    "random_seed": 42,
+    "strategy": "none",
+    "threshold": 0.365,
+    "threshold_objective": "F2 (provisional)",
+    "twf_advisory": {
+      "advisory_wear_min": 200.0,
+      "elevated_wear_min": 220.0,
+      "role": "separate tool-wear advisory; not a classifier output"
+    }
+  },
+  "frozen_spec_sha256": "f007b903bbfbb4d6080366ebf700292e4804d9d9617b841c6557707b9e021070",
+  "model_file": "model_pipeline.joblib",
+  "model_sha256": "6c29f1af33b50609b3c1566f41732c5d40918e8dcb503ec4c4c994b2b439e6d5",
+  "notices": {
+    "synthetic_data": "AI4I 2020 is a SYNTHETIC dataset (UCI, Matzka 2020). Scores measure recovery of the data generator's rules, not predictive capability on real machines.",
+    "twf": "Tool-wear (TWF) failures are randomised in the generator; the classifier cannot predict them reliably. The tool-wear advisory only says the tool is inside the documented 200-240 min replacement window. It is a maintenance heuristic, not a failure prediction."
+  },
+  "phase": 4,
+  "split_file_sha256": "3dfc9e3bd65dcb3955e1005f50c7f45de32a1067b0dd67ba0f3677de4c547cbd",
+  "threshold": {
+    "objective": "F2 (provisional)",
+    "rule": "alert if failure_probability >= threshold",
+    "status": "provisional; set from training-only cross-validation, never from hold-out results",
+    "value": 0.365
+  },
+  "training_data": {
+    "content_hash": "2f6d3f836b426c7cc41de1375fea4fd380eb4a92e26803b647886122e6e21e8d",
+    "positives": 271,
+    "rows": 8000,
+    "udi_max": 10000,
+    "udi_min": 1
+  }
+}

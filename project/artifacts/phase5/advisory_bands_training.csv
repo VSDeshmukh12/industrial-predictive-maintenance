@@ -1,0 +1,4 @@
+level,rows,share_of_rows,twf,twf_rate,share_of_all_twf,failures_any_mode
+none,7376,0.922,1,0.000135575,0.025641,174
+advisory,516,0.0645,24,0.0465116,0.615385,69
+elevated,108,0.0135,14,0.12963,0.358974,28
